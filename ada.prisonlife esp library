@@ -9,8 +9,10 @@ local headOffset = Vector3.new(0, 0.5, 0)
 local legOffset = Vector3.new(0, 3, 0)
 
 local esp = {
-	enabled = false,
-	excludedTeams = {},
+	enabled = true,
+	excludedTeams = {
+		[teams.Guards] = true
+	},
 	excludedPlayers = {},
 	players = {},
 }
@@ -79,10 +81,14 @@ for i, v in players:GetPlayers() do
 end
 
 runService.RenderStepped:Connect(function()
-	if not esp.enabled then return end
-
 	for i, v in esp.players do
 		if not v then 
+			continue
+		end
+		
+		if not esp.enabled then
+			v[1].Visible = false
+			v[2].Visible = false
 			continue
 		end
 
