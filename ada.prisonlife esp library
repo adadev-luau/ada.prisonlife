@@ -65,18 +65,22 @@ function esp:update(plr, character, humanoid, hrp, drawings)
 
 			drawings.outline.Size = Vector2.new(width, height)
 			drawings.outline.Position = Vector2.new(hrpPosition.X - width / 2, hrpPosition.Y - height / 2)
+			drawings.outline.Transparency = esp.transparency
 			drawings.outline.Visible = true
 
 			drawings.box.Size = Vector2.new(width, height)
 			drawings.box.Position = Vector2.new(hrpPosition.X - width / 2, hrpPosition.Y - height / 2)
+			drawings.outline.Transparency = esp.transparency
 			drawings.box.Visible = true
 
 			drawings.healthOutline.Size = Vector2.new(2, math.abs(height))
 			drawings.healthOutline.Position = Vector2.new(hrpPosition.X + width / 2 - 12, hrpPosition.Y - math.abs(height) / 2)
+			drawings.outline.Transparency = esp.transparency
 			drawings.healthOutline.Visible = true
 
 			drawings.health.Size = Vector2.new(2, math.abs(height) * (humanoid.Health / humanoid.MaxHealth))
 			drawings.health.Position = Vector2.new(hrpPosition.X + width / 2 - 12, hrpPosition.Y - math.abs(height) / 2 + (math.abs(height) * (1 - (humanoid.Health / humanoid.MaxHealth))))
+			drawings.outline.Transparency = esp.transparency
 			drawings.health.Visible = true
 
 		else
