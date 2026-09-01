@@ -79,7 +79,7 @@ function esp:update(plr, character, humanoid, hrp, drawings)
             drawings.box.Visible = true
 
             local ratio = humanoid.Health / humanoid.MaxHealth
-            local barHeight = absHeight * (1- ratio)
+            local barHeight = absHeight * (ratio)
 
             local healthX = hrpPos.X - (width / 2) - esp.healthOffset
 
@@ -89,7 +89,7 @@ function esp:update(plr, character, humanoid, hrp, drawings)
             drawings.healthOutline.Visible = true
 
             drawings.health.Size = Vector2.new(3, barHeight)
-            drawings.health.Position = Vector2.new(healthX, topY)
+            drawings.health.Position = Vector2.new(healthX, topY + (absHeight - barHeight))
             drawings.health.Transparency = esp.transparency
             drawings.health.Visible = true
 
