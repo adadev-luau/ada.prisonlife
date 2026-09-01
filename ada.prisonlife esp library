@@ -17,41 +17,52 @@ local esp = {
     healthOffset = 6,
 }
 
-function esp:addPlayer(plr)
-    local outline = Drawing.new("Square")
-    outline.Visible = false
-    outline.Color = Color3.fromRGB(0, 0, 0)
-    outline.Thickness = 3
-    outline.Transparency = esp.transparency
-    outline.Filled = false
+function esp:update(plr, character, humanoid, hrp, drawings)
+    if character and humanoid and hrp and plr ~= player and humanoid.Health > 0 then
+        local hrpPos, onScreen = camera:WorldToViewportPoint(hrp.Position)
+        local headPos = camera:WorldToViewportPoint(character.Head.Position + headOffset)
+        local legPos = camera:WorldToViewportPoint(hrp.Position - legOffset)
 
-    local box = Drawing.new("Square")
-    box.Visible = false
-    box.Color = Color3.fromRGB(159, 115, 255)
-    box.Thickness = 1
-    box.Transparency = esp.transparency
-    box.Filled = false
+        if onScreen then
+            local height = headPos.Y - legPos.Y
+            local absHeight = math.abs(height)
+            local width = absHeight * esp.boxWidth
 
-    local healthOutline = Drawing.new("Square")
-    healthOutline.Visible = false
-    healthOutline.Color = Color3.fromRGB(0, 0, 0)
-    healthOutline.Thickness = 2
-    healthOutline.Transparency = esp.transparency
-    healthOutline.Filled = false
+            local topY = hrpPos.Y - absHeight / 2
+            local leftX = hrpPos.X - width / 2
 
-    local health = Drawing.new("Square")
-    health.Visible = false
-    health.Color = Color3.fromRGB(82, 255, 73)
-    health.Thickness = 1
-    health.Transparency = esp.transparency
-    health.Filled = true
+            drawings.outline.Size = Vector2.new(width, absHeight)
+            drawings.outline.Position = Vector2.new(leftX, topY)
+            drawings.outline.Transparency = esp.transparency
+            drawings.outline.Visible = true
 
-    esp.players[plr] = {
-        outline = outline,
-        box = box,
-        healthOutline = healthOutline,
-        health = health,
-    }
+            drawings.box.Size = Vector2.new(width, absHeight)
+            drawings.box.Position = Vector2.new(leftX, topY)
+            drawings.box.Transparency = esp.transparency
+            drawings.box.Visible = true
+
+            local ratio = humanoid.Health / humanoid.MaxHealth
+            local barHeight = absHeight * ratio
+
+            local healthX = hrpPos.X - (width / 2) - esp.healthOffset
+
+            drawings.healthOutline.Size = Vector2.new(3, absHeight)
+            drawings.healthOutline.Position = Vector2.new(healthX, topY)
+            drawings.healthOutline.Transparency = esp.transparency
+            drawings.healthOutline.Visible = true
+
+            drawings.health.Size = Vector2.new(3, barHeight)
+            drawings.health.Position = Vector2.new(healthX, topY)
+            drawings.health.Transparency = esp.transparency
+            drawings.health.Visible = true
+
+        else
+            drawings.outline.Visible = false
+            drawings.box.Visible = false
+            drawings.healthOutline.Visible = false
+            drawings.health.Visible = false
+        end
+    end
 end
 
 function esp:update(plr, character, humanoid, hrp, drawings)
