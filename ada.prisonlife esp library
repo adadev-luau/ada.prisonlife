@@ -79,7 +79,7 @@ function esp:update(plr, character, humanoid, hrp, drawings)
             drawings.box.Visible = true
 
             local ratio = humanoid.Health / humanoid.MaxHealth
-            local barHeight = absHeight * ratio
+            local barHeight = absHeight * (1- ratio)
 
             local healthX = hrpPos.X - (width / 2) - esp.healthOffset
 
