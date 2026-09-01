@@ -3,20 +3,20 @@ local teams = game:GetService("Teams")
 local player = players.LocalPlayer
 local camera = workspace.CurrentCamera
 local runService = game:GetService("RunService")
-local worldToViewportPoint = camera.WorldToViewportPoint
 
 local headOffset = Vector3.new(0, 0.5, 0)
 local legOffset = Vector3.new(0, 3, 0)
 
 local esp = {
-    enabled = false,
+    enabled = true,
     excludedTeams = {},
     excludedPlayers = {},
     transparency = 0.6,
     players = {},
+    boxWidth = 1,
 }
 
-function esp:addPlayer(player)
+function esp:addPlayer(plr)
     local outline = Drawing.new("Square")
     outline.Visible = false
     outline.Color = Color3.fromRGB(0, 0, 0)
@@ -45,7 +45,7 @@ function esp:addPlayer(player)
     health.Transparency = esp.transparency
     health.Filled = true
 
-    esp.players[player] = {
+    esp.players[plr] = {
         outline = outline,
         box = box,
         healthOutline = healthOutline,
@@ -55,36 +55,40 @@ end
 
 function esp:update(plr, character, humanoid, hrp, drawings)
     if character and humanoid and hrp and plr ~= player and humanoid.Health > 0 then
-        local hrpPosition, onScreen = worldToViewportPoint(camera, hrp.Position)
-        local headPosition = worldToViewportPoint(camera, character.Head.Position + headOffset)
-        local legPosition = worldToViewportPoint(camera, hrp.Position - legOffset)
+        local hrpPos, onScreen = camera:WorldToViewportPoint(hrp.Position)
+        local headPos = camera:WorldToViewportPoint(character.Head.Position + headOffset)
+        local legPos = camera:WorldToViewportPoint(hrp.Position - legOffset)
 
         if onScreen then
-            local height = headPosition.Y - legPosition.Y
+            local height = headPos.Y - legPos.Y
             local absHeight = math.abs(height)
-            local width = absHeight / 2
+            local width = absHeight * esp.boxWidth
+
+            local topY = hrpPos.Y - absHeight / 2
+            local leftX = hrpPos.X - width / 2
 
             drawings.outline.Size = Vector2.new(width, absHeight)
-            drawings.outline.Position = Vector2.new(hrpPosition.X - width / 2, hrpPosition.Y - absHeight / 2)
+            drawings.outline.Position = Vector2.new(leftX, topY)
             drawings.outline.Transparency = esp.transparency
             drawings.outline.Visible = true
 
             drawings.box.Size = Vector2.new(width, absHeight)
-            drawings.box.Position = Vector2.new(hrpPosition.X - width / 2, hrpPosition.Y - absHeight / 2)
+            drawings.box.Position = Vector2.new(leftX, topY)
             drawings.box.Transparency = esp.transparency
             drawings.box.Visible = true
 
-            local bottomY = hrpPosition.Y + absHeight / 2
-            local healthRatio = humanoid.Health / humanoid.MaxHealth
-            local barHeight = absHeight * healthRatio
+            local ratio = humanoid.Health / humanoid.MaxHealth
+            local barHeight = absHeight * ratio
 
-            drawings.healthOutline.Size = Vector2.new(2, absHeight)
-            drawings.healthOutline.Position = Vector2.new(hrpPosition.X + width / 2 - 12, hrpPosition.Y - absHeight / 2)
+            local healthX = leftX - 5
+
+            drawings.healthOutline.Size = Vector2.new(3, absHeight)
+            drawings.healthOutline.Position = Vector2.new(healthX, topY)
             drawings.healthOutline.Transparency = esp.transparency
             drawings.healthOutline.Visible = true
 
-            drawings.health.Size = Vector2.new(2, barHeight)
-            drawings.health.Position = Vector2.new(hrpPosition.X + width / 2 - 12, bottomY - barHeight)
+            drawings.health.Size = Vector2.new(3, barHeight)
+            drawings.health.Position = Vector2.new(healthX, topY)
             drawings.health.Transparency = esp.transparency
             drawings.health.Visible = true
 
@@ -118,9 +122,7 @@ end
 
 runService.RenderStepped:Connect(function()
     for plr, drawings in pairs(esp.players) do
-        if not drawings then 
-            continue
-        end
+        if not drawings then continue end
 
         if not esp.enabled then
             drawings.outline.Visible = false
