@@ -8,12 +8,13 @@ local headOffset = Vector3.new(0, 0.5, 0)
 local legOffset = Vector3.new(0, 3, 0)
 
 local esp = {
-    enabled = true,
+    enabled = false,
     excludedTeams = {},
     excludedPlayers = {},
-    transparency = 0.6,
     players = {},
+    transparency = 0.6,
     boxWidth = 0.5,
+    healthOffset = 6,
 }
 
 function esp:addPlayer(plr)
@@ -80,7 +81,7 @@ function esp:update(plr, character, humanoid, hrp, drawings)
             local ratio = humanoid.Health / humanoid.MaxHealth
             local barHeight = absHeight * ratio
 
-            local healthX = leftX - 5
+            local healthX = leftX - esp.healthOffset
 
             drawings.healthOutline.Size = Vector2.new(3, absHeight)
             drawings.healthOutline.Position = Vector2.new(healthX, topY)
