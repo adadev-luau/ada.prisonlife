@@ -61,29 +61,30 @@ function esp:update(plr, character, humanoid, hrp, drawings)
 
         if onScreen then
             local height = headPosition.Y - legPosition.Y
-            local width = height / 2
+            local absHeight = math.abs(height)
+            local width = absHeight / 2
 
-            drawings.outline.Size = Vector2.new(width, height)
-            drawings.outline.Position = Vector2.new(hrpPosition.X - width / 2, hrpPosition.Y - height / 2)
+            drawings.outline.Size = Vector2.new(width, absHeight)
+            drawings.outline.Position = Vector2.new(hrpPosition.X - width / 2, hrpPosition.Y - absHeight / 2)
             drawings.outline.Transparency = esp.transparency
             drawings.outline.Visible = true
 
-            drawings.box.Size = Vector2.new(width, height)
-            drawings.box.Position = Vector2.new(hrpPosition.X - width / 2, hrpPosition.Y - height / 2)
+            drawings.box.Size = Vector2.new(width, absHeight)
+            drawings.box.Position = Vector2.new(hrpPosition.X - width / 2, hrpPosition.Y - absHeight / 2)
             drawings.box.Transparency = esp.transparency
             drawings.box.Visible = true
 
-            -- fixed health bar (top aligned, grows downward, never clips)
-            local topY = hrpPosition.Y - height / 2
-            local barHeight = height * (humanoid.Health / humanoid.MaxHealth)
+            local bottomY = hrpPosition.Y + absHeight / 2
+            local healthRatio = humanoid.Health / humanoid.MaxHealth
+            local barHeight = absHeight * healthRatio
 
-            drawings.healthOutline.Size = Vector2.new(2, height)
-            drawings.healthOutline.Position = Vector2.new(hrpPosition.X + width / 2 - 12, topY)
+            drawings.healthOutline.Size = Vector2.new(2, absHeight)
+            drawings.healthOutline.Position = Vector2.new(hrpPosition.X + width / 2 - 12, hrpPosition.Y - absHeight / 2)
             drawings.healthOutline.Transparency = esp.transparency
             drawings.healthOutline.Visible = true
 
             drawings.health.Size = Vector2.new(2, barHeight)
-            drawings.health.Position = Vector2.new(hrpPosition.X + width / 2 - 12, topY)
+            drawings.health.Position = Vector2.new(hrpPosition.X + width / 2 - 12, bottomY - barHeight)
             drawings.health.Transparency = esp.transparency
             drawings.health.Visible = true
 
