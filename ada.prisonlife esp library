@@ -20,7 +20,7 @@ local esp = {
 function esp:addPlayer(plr)
     local outline = Drawing.new("Square")
     outline.Visible = false
-    outline.Color = Color3.fromRGB(0, 0, 0)
+    outline.Color = Color3.fromRGB(60, 60, 60)
     outline.Thickness = 3
     outline.Transparency = esp.transparency
     outline.Filled = false
@@ -34,7 +34,7 @@ function esp:addPlayer(plr)
 
     local healthOutline = Drawing.new("Square")
     healthOutline.Visible = false
-    healthOutline.Color = Color3.fromRGB(0, 0, 0)
+    healthOutline.Color = Color3.fromRGB(60, 60, 60)
     healthOutline.Thickness = 2
     healthOutline.Transparency = esp.transparency
     healthOutline.Filled = false
