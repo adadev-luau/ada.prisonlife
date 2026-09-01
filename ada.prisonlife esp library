@@ -13,7 +13,7 @@ local esp = {
     excludedPlayers = {},
     transparency = 0.6,
     players = {},
-    boxWidth = 1,
+    boxWidth = 0.5,
 }
 
 function esp:addPlayer(plr)
