@@ -12,7 +12,7 @@ local esp = {
     excludedTeams = {},
     excludedPlayers = {},
     players = {},
-    transparency = 0.6,
+    transparency = 1,
     boxWidth = 0.5,
     healthOffset = 6,
 }
