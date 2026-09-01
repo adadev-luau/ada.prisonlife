@@ -73,13 +73,17 @@ function esp:update(plr, character, humanoid, hrp, drawings)
             drawings.box.Transparency = esp.transparency
             drawings.box.Visible = true
 
-            drawings.healthOutline.Size = Vector2.new(2, math.abs(height))
-            drawings.healthOutline.Position = Vector2.new(hrpPosition.X + width / 2 - 12, hrpPosition.Y - math.abs(height) / 2)
+            -- fixed health bar (top aligned, grows downward, never clips)
+            local topY = hrpPosition.Y - height / 2
+            local barHeight = height * (humanoid.Health / humanoid.MaxHealth)
+
+            drawings.healthOutline.Size = Vector2.new(2, height)
+            drawings.healthOutline.Position = Vector2.new(hrpPosition.X + width / 2 - 12, topY)
             drawings.healthOutline.Transparency = esp.transparency
             drawings.healthOutline.Visible = true
 
-            drawings.healthOutline.Position = Vector2.new(hrpPosition.X + width / 2 - 12, hrpPosition.Y - math.abs(height) / 2 + 1)
-            drawings.health.Position = Vector2.new(hrpPosition.X + width / 2 - 12, hrpPosition.Y - math.abs(height) / 2 + 1 + (math.abs(height) * (1 - (humanoid.Health / humanoid.MaxHealth))))
+            drawings.health.Size = Vector2.new(2, barHeight)
+            drawings.health.Position = Vector2.new(hrpPosition.X + width / 2 - 12, topY)
             drawings.health.Transparency = esp.transparency
             drawings.health.Visible = true
 
