@@ -8,13 +8,12 @@ local headOffset = Vector3.new(0, 0.5, 0)
 local legOffset = Vector3.new(0, 3, 0)
 
 local esp = {
-    enabled = false,
+    enabled = true,
     excludedTeams = {},
     excludedPlayers = {},
     players = {},
     transparency = 1,
-    boxWidth = 0.5,
-    healthOffset = 6,
+    healthOffset = 9,
 }
 
 function esp:addPlayer(plr)
@@ -27,7 +26,7 @@ function esp:addPlayer(plr)
 
     local box = Drawing.new("Square")
     box.Visible = false
-    box.Color = Color3.fromRGB(159, 115, 255)
+	box.Color = Color3.fromRGB(128, 215, 255)
     box.Thickness = 1
     box.Transparency = esp.transparency
     box.Filled = false
@@ -44,13 +43,24 @@ function esp:addPlayer(plr)
     health.Color = Color3.fromRGB(82, 255, 73)
     health.Thickness = 1
     health.Transparency = esp.transparency
-    health.Filled = true
+	health.Filled = true
+	
+	local name = Drawing.new("Text")
+	name.Visible = false
+	name.Color = Color3.fromRGB(128, 215, 255)
+	name.Size = 11
+	name.Center = true
+	name.Outline = true
+	name.Transparency = esp.transparency
+	name.Text = plr.Name
+	name.Font = Drawing.Fonts.Plex
 
     esp.players[plr] = {
         outline = outline,
         box = box,
         healthOutline = healthOutline,
-        health = health,
+		health = health,
+		name = name,
     }
 end
 
@@ -63,7 +73,7 @@ function esp:update(plr, character, humanoid, hrp, drawings)
         if onScreen then
             local height = headPos.Y - legPos.Y
             local absHeight = math.abs(height)
-            local width = absHeight * esp.boxWidth
+            local width = absHeight * 0.7
 
             local topY = hrpPos.Y - absHeight / 2
             local leftX = hrpPos.X - width / 2
@@ -91,13 +101,18 @@ function esp:update(plr, character, humanoid, hrp, drawings)
             drawings.health.Size = Vector2.new(3, barHeight)
             drawings.health.Position = Vector2.new(healthX, topY + (absHeight - barHeight))
             drawings.health.Transparency = esp.transparency
-            drawings.health.Visible = true
+			drawings.health.Visible = true
+			
+			drawings.name.Position = Vector2.new(hrpPos.X, topY - 16)
+			drawings.name.Transparency = esp.transparency
+			drawings.name.Visible = true
 
         else
             drawings.outline.Visible = false
             drawings.box.Visible = false
             drawings.healthOutline.Visible = false
-            drawings.health.Visible = false
+			drawings.health.Visible = false
+			drawings.name.Visible = false
         end
     end
 end
@@ -112,7 +127,8 @@ players.PlayerRemoving:Connect(function(plr)
         d.outline:Remove()
         d.box:Remove()
         d.healthOutline:Remove()
-        d.health:Remove()
+		d.health:Remove()
+		d.name:Remove()
         esp.players[plr] = nil
     end
 end)
@@ -127,9 +143,10 @@ runService.RenderStepped:Connect(function()
 
         if not esp.enabled then
             drawings.outline.Visible = false
-            drawings.box.Visible = false
+            drawings.Visible = false
             drawings.healthOutline.Visible = false
-            drawings.health.Visible = false
+			drawings.health.Visible = false
+			drawings.name.Visible = false
             continue
         end
 
@@ -138,7 +155,8 @@ runService.RenderStepped:Connect(function()
             drawings.outline.Visible = false
             drawings.box.Visible = false
             drawings.healthOutline.Visible = false
-            drawings.health.Visible = false
+			drawings.health.Visible = false
+			drawings.name.Visible = false
             continue
         end
 
@@ -149,7 +167,8 @@ runService.RenderStepped:Connect(function()
             drawings.outline.Visible = false
             drawings.box.Visible = false
             drawings.healthOutline.Visible = false
-            drawings.health.Visible = false
+			drawings.health.Visible = false
+			drawings.name.Visible = false
             continue
         end
 
@@ -157,7 +176,8 @@ runService.RenderStepped:Connect(function()
             drawings.outline.Visible = false
             drawings.box.Visible = false
             drawings.healthOutline.Visible = false
-            drawings.health.Visible = false
+			drawings.health.Visible = false
+			drawings.name.Visible = false
             continue
         end
 
@@ -165,7 +185,8 @@ runService.RenderStepped:Connect(function()
             drawings.outline.Visible = false
             drawings.box.Visible = false
             drawings.healthOutline.Visible = false
-            drawings.health.Visible = false
+			drawings.health.Visible = false
+			drawings.name.Visible = false
             continue
         end
 
