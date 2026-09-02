@@ -8,7 +8,7 @@ local headOffset = Vector3.new(0, 0.5, 0)
 local legOffset = Vector3.new(0, 3, 0)
 
 local esp = {
-    enabled = false,
+    enabled = true,
     excludedTeams = {},
     excludedPlayers = {},
     players = {},
@@ -143,7 +143,7 @@ runService.RenderStepped:Connect(function()
 
         if not esp.enabled then
             drawings.outline.Visible = false
-            drawings.Visible = false
+            drawings.box.Visible = false
             drawings.healthOutline.Visible = false
 			drawings.health.Visible = false
 			drawings.name.Visible = false
