@@ -2884,7 +2884,7 @@ function library:Init(key)
             end
         end
         --
-        function Components:NewSelector(text, default, list, callback)
+        function Components:NewSelector(text, default, mutli, list, callback)
             text = text or "selector"
             default = default or ". . ."
             list = list or {}
@@ -3043,6 +3043,7 @@ function library:Init(key)
                 Val = (Amount * 20) + 20
             end
             for i,v in next, list do
+                local selectedOptions = {}
                 local optionButton = Instance.new("TextButton")
 
                 optionButton.Name = "optionButton"
@@ -3068,7 +3069,12 @@ function library:Init(key)
                     end
                     TweenService:Create(optionButton, TweenTable["selector"], {TextColor3 = Color3.fromRGB(128, 215, 255)}):Play()
                     selectorText.Text = optionButton.Text
-                    callback(optionButton.Text)
+                    if multi then
+                       table.insert(selectedOptions, optionButton.Text)
+                       callback(selectedOptions)
+                    else
+                        callback(optionButton.Text)
+                    end
                 end)
 
                 selectorContainer.Size = UDim2.new(0, 394, 0, Val)
