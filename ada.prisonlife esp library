@@ -3063,30 +3063,43 @@ function library:Init(key)
                 end
 
                 optionButton.MouseButton1Click:Connect(function()
-                    TweenService:Create(optionButton, TweenTable["selector"], {TextColor3 = Color3.fromRGB(128, 215, 255)}):Play()
-                    selectorText.Text = selectedOptions or optionButton.Text
-                    
                     if multi then
                         local index = table.find(selectedOptions, optionButton.Text)
 
                         if index then
                             table.remove(selectedOptions, index)
-                            TweenService:Create(optionButton, TweenTable["selector"], {TextColor3 = Color3.fromRGB(160, 160, 160)}):Play()
+                            TweenService:Create(optionButton, TweenTable["selector"], {
+                                TextColor3 = Color3.fromRGB(160, 160, 160)
+                            }):Play()
                         else
                             table.insert(selectedOptions, optionButton.Text)
-                            TweenService:Create(optionButton, TweenTable["selector"], {TextColor3 = Color3.fromRGB(128, 215, 255)}):Play()
+                            TweenService:Create(optionButton, TweenTable["selector"], {
+                                TextColor3 = Color3.fromRGB(128, 215, 255)
+                            }):Play()
                         end
+
+                        selectorText.Text = table.concat(selectedOptions, ", ")
                         callback(selectedOptions)
                     else
-                        for z, x in next, selectorContainer:GetChildren() do
+                        for _, x in next, selectorContainer:GetChildren() do
                             if x:IsA("TextButton") then
-                                TweenService:Create(x, TweenTable["selector"], {TextColor3 = Color3.fromRGB(160, 160, 160)}):Play()
+                                TweenService:Create(x, TweenTable["selector"], {
+                                    TextColor3 = Color3.fromRGB(160, 160, 160)
+                                }):Play()
                             end
                         end
 
                         callback(optionButton.Text)
+                        selectorText.Text = optionButton.Text
                     end
-                end)
+
+                    if not multi then
+                        TweenService:Create(optionButton, TweenTable["selector"], {
+                            TextColor3 = Color3.fromRGB(128, 215, 255)
+                        }):Play()
+                    end
+    end
+end)
 
                 selectorContainer.Size = UDim2.new(0, 394, 0, Val)
                 selectorTwo.Size = UDim2.new(0, 394, 0, Val)
