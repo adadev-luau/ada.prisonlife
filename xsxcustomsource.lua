@@ -3070,9 +3070,18 @@ function library:Init(key)
                     end
                     TweenService:Create(optionButton, TweenTable["selector"], {TextColor3 = Color3.fromRGB(128, 215, 255)}):Play()
                     selectorText.Text = optionButton.Text
+                    
                     if multi then
-                       table.insert(selectedOptions, optionButton.Text)
-                       callback(selectedOptions)
+                        local index = table.find(selectedOptions, optionButton.Text)
+
+                        if index then
+                            table.remove(selectedOptions, index)
+                            TweenService:Create(optionButton, TweenTable["selector"], {TextColor3 = Color3.fromRGB(160, 160, 160)}):Play()
+                        else
+                            table.insert(selectedOptions, optionButton.Text)
+                            TweenService:Create(optionButton, TweenTable["selector"], {TextColor3 = Color3.fromRGB(128, 215, 255)}):Play()
+                        end
+                        callback(selectedOptions)
                     else
                         callback(optionButton.Text)
                     end
