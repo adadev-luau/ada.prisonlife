@@ -2884,7 +2884,7 @@ function library:Init(key)
             end
         end
         --
-        function Components:NewSelector(text, default, mutli, list, callback)
+        function Components:NewSelector(text, default, multi, list, callback)
             text = text or "selector"
             default = default or ". . ."
             multi = multi or false
