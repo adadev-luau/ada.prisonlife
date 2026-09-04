@@ -2888,8 +2888,18 @@ function library:Init(key)
             text = text or "selector"
             default = default or ". . ."
             multi = multi or false
-            list = list or {}
-            callback = callback or function() end
+            -- Keep a missing/incorrect option list from reaching the length
+            -- operator below. This also supports calls that omit `list` and
+            -- pass the callback as the fourth argument.
+            if type(list) == "function" and callback == nil then
+                callback = list
+                list = {}
+            elseif type(list) ~= "table" then
+                list = {}
+            end
+            if type(callback) ~= "function" then
+                callback = function() end
+            end
 
             local selectedOptions = {}
             local selectorFrame = Instance.new("Frame")
