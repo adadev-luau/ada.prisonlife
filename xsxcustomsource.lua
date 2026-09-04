@@ -3063,11 +3063,7 @@ function library:Init(key)
                 end
 
                 optionButton.MouseButton1Click:Connect(function()
-                    for z,x in next, selectorContainer:GetChildren() do
-                        if x:IsA("TextButton") then
-                            TweenService:Create(x, TweenTable["selector"], {TextColor3 = Color3.fromRGB(160, 160, 160)}):Play()
-                        end
-                    end
+
                     TweenService:Create(optionButton, TweenTable["selector"], {TextColor3 = Color3.fromRGB(128, 215, 255)}):Play()
                     selectorText.Text = optionButton.Text
                     
@@ -3083,6 +3079,11 @@ function library:Init(key)
                         end
                         callback(selectedOptions)
                     else
+                        for z, x in next, selectorContainer:GetChildren() do
+                            if x:IsA("TextButton") then
+                                TweenService:Create(x, TweenTable["selector"], {TextColor3 = Color3.fromRGB(160, 160, 160)}):Play()
+                            end
+                        end
                         callback(optionButton.Text)
                     end
                 end)
