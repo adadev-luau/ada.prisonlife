@@ -3062,7 +3062,10 @@ function library:Init(key)
                     callback(selectorText.Text)
                 end
 
-                optionButton.MouseButton1Click:Connect(function()                  
+                optionButton.MouseButton1Click:Connect(function()
+                    TweenService:Create(optionButton, TweenTable["selector"], {TextColor3 = Color3.fromRGB(128, 215, 255)}):Play()
+                    selectorText.Text = selectedOptions or optionButton.Text
+                    
                     if multi then
                         local index = table.find(selectedOptions, optionButton.Text)
 
@@ -3080,9 +3083,6 @@ function library:Init(key)
                                 TweenService:Create(x, TweenTable["selector"], {TextColor3 = Color3.fromRGB(160, 160, 160)}):Play()
                             end
                         end
-
-                        TweenService:Create(optionButton, TweenTable["selector"], {TextColor3 = Color3.fromRGB(128, 215, 255)}):Play()
-                        selectorText.Text = optionButton.Text
 
                         callback(optionButton.Text)
                     end
