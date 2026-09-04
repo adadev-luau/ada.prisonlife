@@ -2887,9 +2887,11 @@ function library:Init(key)
         function Components:NewSelector(text, default, mutli, list, callback)
             text = text or "selector"
             default = default or ". . ."
+            multi = multi or false
             list = list or {}
             callback = callback or function() end
 
+            local selectedOptions = {}
             local selectorFrame = Instance.new("Frame")
             local selectorLabel = Instance.new("TextLabel")
             local selectorLabelPadding = Instance.new("UIPadding")
@@ -3043,7 +3045,6 @@ function library:Init(key)
                 Val = (Amount * 20) + 20
             end
             for i,v in next, list do
-                local selectedOptions = {}
                 local optionButton = Instance.new("TextButton")
 
                 optionButton.Name = "optionButton"
