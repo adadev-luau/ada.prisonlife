@@ -3068,14 +3068,10 @@ function library:Init(key)
 
                         if index then
                             table.remove(selectedOptions, index)
-                            TweenService:Create(optionButton, TweenTable["selector"], {
-                                TextColor3 = Color3.fromRGB(160, 160, 160)
-                            }):Play()
+                            TweenService:Create(optionButton, TweenTable["selector"], {TextColor3 = Color3.fromRGB(160, 160, 160)}):Play()
                         else
                             table.insert(selectedOptions, optionButton.Text)
-                            TweenService:Create(optionButton, TweenTable["selector"], {
-                                TextColor3 = Color3.fromRGB(128, 215, 255)
-                            }):Play()
+                            TweenService:Create(optionButton, TweenTable["selector"], {TextColor3 = Color3.fromRGB(128, 215, 255)}):Play()
                         end
 
                         selectorText.Text = table.concat(selectedOptions, ", ")
@@ -3083,9 +3079,7 @@ function library:Init(key)
                     else
                         for _, x in next, selectorContainer:GetChildren() do
                             if x:IsA("TextButton") then
-                                TweenService:Create(x, TweenTable["selector"], {
-                                    TextColor3 = Color3.fromRGB(160, 160, 160)
-                                }):Play()
+                                TweenService:Create(x, TweenTable["selector"], {TextColor3 = Color3.fromRGB(160, 160, 160)}):Play()
                             end
                         end
 
@@ -3094,12 +3088,9 @@ function library:Init(key)
                     end
 
                     if not multi then
-                        TweenService:Create(optionButton, TweenTable["selector"], {
-                            TextColor3 = Color3.fromRGB(128, 215, 255)
-                        }):Play()
+                        TweenService:Create(optionButton, TweenTable["selector"], {TextColor3 = Color3.fromRGB(128, 215, 255)}):Play()
                     end
-    end
-end)
+                end)
 
                 selectorContainer.Size = UDim2.new(0, 394, 0, Val)
                 selectorTwo.Size = UDim2.new(0, 394, 0, Val)
