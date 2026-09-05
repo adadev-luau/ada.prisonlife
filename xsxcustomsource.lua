@@ -2884,266 +2884,225 @@ function library:Init(key)
             end
         end
         --
-        function Components:NewSelector(text, default, multi, list, callback)
-            text = text or "selector"
-            default = default or ". . ."
-            multi = multi or false
-            list = list or {}
-            callback = callback or function() end
+    function Components:NewSelector(text, default, multi, list, callback)
+    text = text or "selector"
+    default = default or ". . ."
+    multi = multi or false
+    list = list or {}
+    callback = callback or function() end
 
-            local selectedOptions = {}
-            local selectorFrame = Instance.new("Frame")
-            local selectorLabel = Instance.new("TextLabel")
-            local selectorLabelPadding = Instance.new("UIPadding")
-            local selectorFrameLayout = Instance.new("UIListLayout")
-            local selector = Instance.new("TextButton")
-            local selectorCorner = Instance.new("UICorner")
-            local selectorLayout = Instance.new("UIListLayout")
-            local selectorPadding = Instance.new("UIPadding")
-            local selectorTwo = Instance.new("Frame")
-            local selectorText = Instance.new("TextLabel")
-            local textBoxValuesPadding = Instance.new("UIPadding")
-            local Frame = Instance.new("Frame")
-            local selectorTwoLayout = Instance.new("UIListLayout")
-            local selectorTwoGradient = Instance.new("UIGradient")
-            local selectorTwoCorner = Instance.new("UICorner")
-            local selectorPadding_2 = Instance.new("UIPadding")
-            local selectorContainer = Instance.new("Frame")
-            local selectorTwoLayout_2 = Instance.new("UIListLayout")
-            
-            selectorFrame.Name = "selectorFrame"
-            selectorFrame.Parent = page
-            selectorFrame.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-            selectorFrame.BackgroundTransparency = 1.000
-            selectorFrame.ClipsDescendants = true
-            selectorFrame.Position = UDim2.new(0.00499999989, 0, 0.0895953774, 0)
-            selectorFrame.Size = UDim2.new(0, 396, 0, 46)
+    local selectedOptions = {}
+    local selectorFrame = Instance.new("Frame")
+    local selectorLabel = Instance.new("TextLabel")
+    local selectorLabelPadding = Instance.new("UIPadding")
+    local selectorFrameLayout = Instance.new("UIListLayout")
+    local selector = Instance.new("TextButton")
+    local selectorCorner = Instance.new("UICorner")
+    local selectorLayout = Instance.new("UIListLayout")
+    local selectorPadding = Instance.new("UIPadding")
+    local selectorTwo = Instance.new("Frame")
+    local selectorText = Instance.new("TextLabel")
+    local textBoxValuesPadding = Instance.new("UIPadding")
+    local Frame = Instance.new("Frame")
+    local selectorTwoLayout = Instance.new("UIListLayout")
+    local selectorTwoGradient = Instance.new("UIGradient")
+    local selectorTwoCorner = Instance.new("UICorner")
+    local selectorPadding_2 = Instance.new("UIPadding")
+    local selectorContainer = Instance.new("Frame")
+    local selectorTwoLayout_2 = Instance.new("UIListLayout")
 
-            
-            selectorLabel.Name = "selectorLabel"
-            selectorLabel.Parent = selectorFrame
-            selectorLabel.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-            selectorLabel.BackgroundTransparency = 1.000
-            selectorLabel.Size = UDim2.new(0, 396, 0, 24)
-            selectorLabel.Font = Enum.Font.Code
-            selectorLabel.Text = text
-            selectorLabel.TextColor3 = Color3.fromRGB(190, 190, 190)
-            selectorLabel.TextSize = 14.000
-            selectorLabel.TextWrapped = true
-            selectorLabel.TextXAlignment = Enum.TextXAlignment.Left
-            selectorLabel.RichText = true
-            
-            selectorLabelPadding.Name = "selectorLabelPadding"
-            selectorLabelPadding.Parent = selectorLabel
-            selectorLabelPadding.PaddingBottom = UDim.new(0, 6)
-            selectorLabelPadding.PaddingLeft = UDim.new(0, 2)
-            selectorLabelPadding.PaddingRight = UDim.new(0, 6)
-            selectorLabelPadding.PaddingTop = UDim.new(0, 6)
-            
-            selectorFrameLayout.Name = "selectorFrameLayout"
-            selectorFrameLayout.Parent = selectorFrame
-            selectorFrameLayout.HorizontalAlignment = Enum.HorizontalAlignment.Center
-            selectorFrameLayout.SortOrder = Enum.SortOrder.LayoutOrder
-            
-            selector.Name = "selector"
-            selector.Parent = selectorFrame
-            selector.BackgroundColor3 = Color3.fromRGB(60, 60, 60)
-            selector.ClipsDescendants = true
-            selector.Position = UDim2.new(0, 0, 0.0926640928, 0)
-            selector.Size = UDim2.new(0, 396, 0, 21)
-            selector.AutoButtonColor = false
-            selector.Font = Enum.Font.SourceSans
-            selector.Text = ""
-            selector.TextColor3 = Color3.fromRGB(0, 0, 0)
-            selector.TextSize = 14.000
-            
-            selectorCorner.CornerRadius = UDim.new(0, 2)
-            selectorCorner.Name = "selectorCorner"
-            selectorCorner.Parent = selector
-            
-            selectorLayout.Name = "selectorLayout"
-            selectorLayout.Parent = selector
-            selectorLayout.HorizontalAlignment = Enum.HorizontalAlignment.Center
-            selectorLayout.SortOrder = Enum.SortOrder.LayoutOrder
-            
-            selectorPadding.Name = "selectorPadding"
-            selectorPadding.Parent = selector
-            selectorPadding.PaddingTop = UDim.new(0, 1)
-            
-            selectorTwo.Name = "selectorTwo"
-            selectorTwo.Parent = selector
-            selectorTwo.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-            selectorTwo.ClipsDescendants = true
-            selectorTwo.Position = UDim2.new(0.00252525252, 0, 0, 0)
-            selectorTwo.Size = UDim2.new(0, 394, 0, 20)
-            
-            selectorText.Name = "selectorText"
-            selectorText.Parent = selectorTwo
-            selectorText.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-            selectorText.BackgroundTransparency = 1.000
-            selectorText.Size = UDim2.new(0, 394, 0, 20)
-            selectorText.Font = Enum.Font.Code
-            selectorText.LineHeight = 1.150
-            selectorText.TextColor3 = Color3.fromRGB(160, 160, 160)
-            selectorText.TextSize = 14.000
-            selectorText.TextXAlignment = Enum.TextXAlignment.Left
-            selectorText.Text = default
-            
-            textBoxValuesPadding.Name = "textBoxValuesPadding"
-            textBoxValuesPadding.Parent = selectorText
-            textBoxValuesPadding.PaddingBottom = UDim.new(0, 6)
-            textBoxValuesPadding.PaddingLeft = UDim.new(0, 6)
-            textBoxValuesPadding.PaddingRight = UDim.new(0, 6)
-            textBoxValuesPadding.PaddingTop = UDim.new(0, 6)
-            
-            Frame.Parent = selectorText
-            Frame.BackgroundColor3 = Color3.fromRGB(60, 60, 60)
-            Frame.BorderSizePixel = 0
-            Frame.Position = UDim2.new(-0.008, 0, 1.78, 0)
-            Frame.Size = UDim2.new(0, 388, 0, 1)
-            
-            selectorTwoLayout.Name = "selectorTwoLayout"
-            selectorTwoLayout.Parent = selectorTwo
-            selectorTwoLayout.HorizontalAlignment = Enum.HorizontalAlignment.Center
-            selectorTwoLayout.SortOrder = Enum.SortOrder.LayoutOrder
-            
-            selectorTwoGradient.Color = ColorSequence.new{ColorSequenceKeypoint.new(0.00, Color3.fromRGB(34, 34, 34)), ColorSequenceKeypoint.new(1.00, Color3.fromRGB(28, 28, 28))}
-            selectorTwoGradient.Rotation = 90
-            selectorTwoGradient.Name = "selectorTwoGradient"
-            selectorTwoGradient.Parent = selectorTwo
-            
-            selectorTwoCorner.CornerRadius = UDim.new(0, 2)
-            selectorTwoCorner.Name = "selectorTwoCorner"
-            selectorTwoCorner.Parent = selectorTwo
-            
-            selectorPadding_2.Name = "selectorPadding"
-            selectorPadding_2.Parent = selectorTwo
-            selectorPadding_2.PaddingTop = UDim.new(0, 1)
-            
-            selectorContainer.Name = "selectorContainer"
-            selectorContainer.Parent = selectorTwo
-            selectorContainer.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-            selectorContainer.BackgroundTransparency = 1.000
-            selectorContainer.Size = UDim2.new(0, 394, 0, 20)
-        
-            selectorTwoLayout_2.Name = "selectorTwoLayout"
-            selectorTwoLayout_2.Parent = selectorContainer
-            selectorTwoLayout_2.HorizontalAlignment = Enum.HorizontalAlignment.Center
-            selectorTwoLayout_2.SortOrder = Enum.SortOrder.LayoutOrder
+    selectorFrame.Name = "selectorFrame"
+    selectorFrame.Parent = page
+    selectorFrame.BackgroundTransparency = 1
+    selectorFrame.ClipsDescendants = true
+    selectorFrame.Position = UDim2.new(0.005, 0, 0.089, 0)
+    selectorFrame.Size = UDim2.new(0, 396, 0, 46)
 
-            CreateTween("selector", 0.08)
+    selectorLabel.Name = "selectorLabel"
+    selectorLabel.Parent = selectorFrame
+    selectorLabel.BackgroundTransparency = 1
+    selectorLabel.Size = UDim2.new(0, 396, 0, 24)
+    selectorLabel.Font = Enum.Font.Code
+    selectorLabel.Text = text
+    selectorLabel.TextColor3 = Color3.fromRGB(190, 190, 190)
+    selectorLabel.TextSize = 14
+    selectorLabel.TextWrapped = true
+    selectorLabel.TextXAlignment = Enum.TextXAlignment.Left
+    selectorLabel.RichText = true
 
-            selectorContainer.ChildAdded:Connect(UpdatePageSize)
-            selectorContainer.ChildAdded:Connect(UpdatePageSize)
+    selectorLabelPadding.Parent = selectorLabel
+    selectorLabelPadding.PaddingBottom = UDim.new(0, 6)
+    selectorLabelPadding.PaddingLeft = UDim.new(0, 2)
+    selectorLabelPadding.PaddingRight = UDim.new(0, 6)
+    selectorLabelPadding.PaddingTop = UDim.new(0, 6)
 
-            UpdatePageSize()
+    selectorFrameLayout.Parent = selectorFrame
+    selectorFrameLayout.HorizontalAlignment = Enum.HorizontalAlignment.Center
+    selectorFrameLayout.SortOrder = Enum.SortOrder.LayoutOrder
 
-            local Amount = #list
-            local Val = (Amount * 20)
-            function checkSizes()
-                Amount = #list
-                Val = (Amount * 20) + 20
+    selector.Name = "selector"
+    selector.Parent = selectorFrame
+    selector.BackgroundColor3 = Color3.fromRGB(60, 60, 60)
+    selector.ClipsDescendants = true
+    selector.Position = UDim2.new(0, 0, 0.092, 0)
+    selector.Size = UDim2.new(0, 396, 0, 21)
+    selector.AutoButtonColor = false
+    selector.Font = Enum.Font.SourceSans
+    selector.Text = ""
+    selector.TextColor3 = Color3.fromRGB(0, 0, 0)
+    selector.TextSize = 14
+
+    selectorCorner.Parent = selector
+    selectorCorner.CornerRadius = UDim.new(0, 2)
+
+    selectorLayout.Parent = selector
+    selectorLayout.HorizontalAlignment = Enum.HorizontalAlignment.Center
+    selectorLayout.SortOrder = Enum.SortOrder.LayoutOrder
+
+    selectorPadding.Parent = selector
+    selectorPadding.PaddingTop = UDim.new(0, 1)
+
+    selectorTwo.Name = "selectorTwo"
+    selectorTwo.Parent = selector
+    selectorTwo.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+    selectorTwo.ClipsDescendants = true
+    selectorTwo.Position = UDim2.new(0.0025, 0, 0, 0)
+    selectorTwo.Size = UDim2.new(0, 394, 0, 20)
+
+    selectorText.Name = "selectorText"
+    selectorText.Parent = selectorTwo
+    selectorText.BackgroundTransparency = 1
+    selectorText.Size = UDim2.new(0, 394, 0, 20)
+    selectorText.Font = Enum.Font.Code
+    selectorText.LineHeight = 1.15
+    selectorText.TextColor3 = Color3.fromRGB(160, 160, 160)
+    selectorText.TextSize = 14
+    selectorText.TextXAlignment = Enum.TextXAlignment.Left
+    selectorText.Text = default
+
+    textBoxValuesPadding.Parent = selectorText
+    textBoxValuesPadding.PaddingBottom = UDim.new(0, 6)
+    textBoxValuesPadding.PaddingLeft = UDim.new(0, 6)
+    textBoxValuesPadding.PaddingRight = UDim.new(0, 6)
+    textBoxValuesPadding.PaddingTop = UDim.new(0, 6)
+
+    Frame.Parent = selectorText
+    Frame.BackgroundColor3 = Color3.fromRGB(60, 60, 60)
+    Frame.BorderSizePixel = 0
+    Frame.Position = UDim2.new(-0.008, 0, 1.78, 0)
+    Frame.Size = UDim2.new(0, 388, 0, 1)
+
+    selectorTwoLayout.Parent = selectorTwo
+    selectorTwoLayout.HorizontalAlignment = Enum.HorizontalAlignment.Center
+    selectorTwoLayout.SortOrder = Enum.SortOrder.LayoutOrder
+
+    selectorTwoGradient.Color = ColorSequence.new{
+        ColorSequenceKeypoint.new(0, Color3.fromRGB(34, 34, 34)),
+        ColorSequenceKeypoint.new(1, Color3.fromRGB(28, 28, 28))
+    }
+    selectorTwoGradient.Rotation = 90
+    selectorTwoGradient.Parent = selectorTwo
+
+    selectorTwoCorner.Parent = selectorTwo
+    selectorTwoCorner.CornerRadius = UDim.new(0, 2)
+
+    selectorPadding_2.Parent = selectorTwo
+    selectorPadding_2.PaddingTop = UDim.new(0, 1)
+
+    selectorContainer.Name = "selectorContainer"
+    selectorContainer.Parent = selectorTwo
+    selectorContainer.BackgroundTransparency = 1
+    selectorContainer.Size = UDim2.new(0, 394, 0, 20)
+
+    selectorTwoLayout_2.Parent = selectorContainer
+    selectorTwoLayout_2.HorizontalAlignment = Enum.HorizontalAlignment.Center
+    selectorTwoLayout_2.SortOrder = Enum.SortOrder.LayoutOrder
+
+    CreateTween("selector", 0.08)
+
+    selectorContainer.ChildAdded:Connect(UpdatePageSize)
+    selectorContainer.ChildAdded:Connect(UpdatePageSize)
+
+    UpdatePageSize()
+
+    local function updateSizes()
+        local count = #selectorContainer:GetChildren()
+        local height = (count * 20)
+        selectorContainer.Size = UDim2.new(0, 394, 0, height)
+        selectorTwo.Size = UDim2.new(0, 394, 0, height)
+        selector.Size = UDim2.new(0, 396, 0, height + 2)
+        selectorFrame.Size = UDim2.new(0, 396, 0, height + 26)
+        UpdatePageSize()
+    end
+
+    local function updateText()
+        if multi then
+            if #selectedOptions == 0 then
+                selectorText.Text = default
+            else
+                selectorText.Text = table.concat(selectedOptions, ", ")
             end
-            for i,v in next, list do
-                local optionButton = Instance.new("TextButton")
+        end
+    end
 
-                optionButton.Name = "optionButton"
-                optionButton.Parent = selectorContainer
-                optionButton.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-                optionButton.BackgroundTransparency = 1.000
-                optionButton.Size = UDim2.new(0, 394, 0, 20)
-                optionButton.AutoButtonColor = false
-                optionButton.Font = Enum.Font.Code
-                optionButton.Text = v
-                optionButton.TextColor3 = Color3.fromRGB(160, 160, 160)
-                optionButton.TextSize = 14.000
-                if optionButton.Text == default then
-                    optionButton.TextColor3 = Color3.fromRGB(128, 215, 255)
-                    callback(selectorText.Text)
-                end
+    local function toggleOption(btn)
+        local txt = btn.Text
+        local index = table.find(selectedOptions, txt)
 
-                optionButton.MouseButton1Click:Connect(function()
+        if index then
+            table.remove(selectedOptions, index)
+            TweenService:Create(btn, TweenTable["selector"], {TextColor3 = Color3.fromRGB(160, 160, 160)}):Play()
+        else
+            table.insert(selectedOptions, txt)
+            TweenService:Create(btn, TweenTable["selector"], {TextColor3 = Color3.fromRGB(128, 215, 255)}):Play()
+        end
 
-                    TweenService:Create(optionButton, TweenTable["selector"], {TextColor3 = Color3.fromRGB(128, 215, 255)}):Play()
-                    selectorText.Text = optionButton.Text
-                    
-                    if multi then
-                        local index = table.find(selectedOptions, optionButton.Text)
+        updateText()
+        callback(selectedOptions)
+    end
 
-                        if index then
-                            table.remove(selectedOptions, index)
-                            TweenService:Create(optionButton, TweenTable["selector"], {TextColor3 = Color3.fromRGB(160, 160, 160)}):Play()
-                        else
-                            table.insert(selectedOptions, optionButton.Text)
-                            TweenService:Create(optionButton, TweenTable["selector"], {TextColor3 = Color3.fromRGB(128, 215, 255)}):Play()
-                        end
-                        callback(selectedOptions)
-                    else
-                        for z, x in next, selectorContainer:GetChildren() do
-                            if x:IsA("TextButton") then
-                                TweenService:Create(x, TweenTable["selector"], {TextColor3 = Color3.fromRGB(160, 160, 160)}):Play()
-                            end
-                        end
-                        callback(optionButton.Text)
-                    end
-                end)
-
-                selectorContainer.Size = UDim2.new(0, 394, 0, Val)
-                selectorTwo.Size = UDim2.new(0, 394, 0, Val)
-                selector.Size = UDim2.new(0, 396, 0, Val + 2)
-                selectorFrame.Size = UDim2.new(0, 396, 0, Val + 26)
-
-                UpdatePageSize()
-                checkSizes()
+    local function singleSelect(btn)
+        for _, x in next, selectorContainer:GetChildren() do
+            if x:IsA("TextButton") then
+                TweenService:Create(x, TweenTable["selector"], {TextColor3 = Color3.fromRGB(160, 160, 160)}):Play()
             end
+        end
 
-            UpdatePageSize()
-            local SelectorFunctions = {}
-            local AddAmount = 0
-            function SelectorFunctions:AddOption(new, callback_f)
-                new = new or "option"
-                list[new] = new
+        TweenService:Create(btn, TweenTable["selector"], {TextColor3 = Color3.fromRGB(128, 215, 255)}):Play()
+        selectorText.Text = btn.Text
+        callback(btn.Text)
+    end
 
-                local optionButton = Instance.new("TextButton")
+    local function createOption(txt)
+        local optionButton = Instance.new("TextButton")
+        optionButton.Name = "optionButton"
+        optionButton.Parent = selectorContainer
+        optionButton.BackgroundTransparency = 1
+        optionButton.Size = UDim2.new(0, 394, 0, 20)
+        optionButton.AutoButtonColor = false
+        optionButton.Font = Enum.Font.Code
+        optionButton.Text = txt
+        optionButton.TextColor3 = Color3.fromRGB(160, 160, 160)
+        optionButton.TextSize = 14
 
-                AddAmount = AddAmount + 20
-
-                optionButton.Name = "optionButton"
-                optionButton.Parent = selectorContainer
-                optionButton.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-                optionButton.BackgroundTransparency = 1.000
-                optionButton.Size = UDim2.new(0, 394, 0, 20)
-                optionButton.AutoButtonColor = false
-                optionButton.Font = Enum.Font.Code
-                optionButton.Text = new
-                optionButton.TextColor3 = Color3.fromRGB(140, 140, 140)
-                optionButton.TextSize = 14.000
-                if optionButton.Text == default then
-                    optionButton.TextColor3 = Color3.fromRGB(128, 215, 255)
-                    callback(selectorText.Text)
-                end
-
-                optionButton.MouseButton1Click:Connect(function()
-                    for z,x in next, selectorContainer:GetChildren() do
-                        if x:IsA("TextButton") then
-                            TweenService:Create(x, TweenTable["selector"], {TextColor3 = Color3.fromRGB(140, 140, 140)}):Play()
-                        end
-                    end
-                    TweenService:Create(optionButton, TweenTable["selector"], {TextColor3 = Color3.fromRGB(128, 215, 255)}):Play()
-                    selectorText.Text = optionButton.Text
-                    callback(optionButton.Text)
-                end)
-
-                checkSizes()
-                selectorContainer.Size = UDim2.new(0, 394, 0, Val + AddAmount)
-                selectorTwo.Size = UDim2.new(0, 394, 0, Val + AddAmount)
-                selector.Size = UDim2.new(0, 396, 0, (Val + AddAmount) + 2)
-                selectorFrame.Size = UDim2.new(0, 396, 0, (Val + AddAmount) + 26)
-
-                UpdatePageSize()
-                checkSizes()
-                return SelectorFunctions
+        optionButton.MouseButton1Click:Connect(function()
+            if multi then
+                toggleOption(optionButton)
+            else
+                singleSelect(optionButton)
             end
+        end)
+
+        updateSizes()
+    end
+
+    for _, v in next, list do
+        createOption(v)
+    end
+
+    return {}
+end
+
             --
             local RemoveAmount = 0
             function SelectorFunctions:RemoveOption(option)
