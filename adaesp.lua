@@ -3083,7 +3083,7 @@ function library:Init(key)
                             table.insert(selectedOptions, optionButton.Text)
                             TweenService:Create(optionButton, TweenTable["selector"], {TextColor3 = Color3.fromRGB(128, 215, 255)}):Play()
                         end
-                                                selectorText.Text = table.concat(selectedOptions, ", ")
+                        selectorText.Text = table.concat(selectedOptions, ", ")
                         callback(selectedOptions)
                     else
                         for z, x in next, selectorContainer:GetChildren() do
@@ -3093,6 +3093,7 @@ function library:Init(key)
                         end
 
                         selectorText.Text = optionButton.Text
+                        TweenService:Create(selectorText, TweenTable["selector"], {TextColor3 = Color3.fromRGB(128, 215, 255)}):Play()
                         callback(optionButton.Text)
                     end
                 end)
