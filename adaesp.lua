@@ -143,7 +143,7 @@ runService.RenderStepped:Connect(function()
 
         if not esp.enabled then
             drawings.outline.Visible = false
-            drawings.Visible = false
+            drawings.box.Visible = false
             drawings.healthOutline.Visible = false
 			drawings.health.Visible = false
 			drawings.name.Visible = false
@@ -172,7 +172,7 @@ runService.RenderStepped:Connect(function()
             continue
         end
 
-        if table.find(esp.excludedTeams, plr.Team.Name) then
+        if esp.excludedTeams[plr.Team.Name] then
             drawings.outline.Visible = false
             drawings.box.Visible = false
             drawings.healthOutline.Visible = false
