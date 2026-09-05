@@ -2884,7 +2884,7 @@ function library:Init(key)
             end
         end
         --
-        function Components:NewSelector(text, default, multi, list, callback)
+function Components:NewSelector(text, default, multi, list, callback)
     text = text or "selector"
     default = default or ". . ."
     multi = multi or false
@@ -3041,11 +3041,14 @@ function library:Init(key)
                 count += 1
             end
         end
+
         local height = count * 20
+
         selectorContainer.Size = UDim2.new(0, 394, 0, height)
         selectorTwo.Size = UDim2.new(0, 394, 0, height)
         selector.Size = UDim2.new(0, 396, 0, height + 2)
         selectorFrame.Size = UDim2.new(0, 396, 0, height + 26)
+
         UpdatePageSize()
     end
 
@@ -3116,7 +3119,6 @@ function library:Init(key)
 
     return {}
 end
-
 
             UpdatePageSize()
             local SelectorFunctions = {}
