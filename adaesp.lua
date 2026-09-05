@@ -3093,7 +3093,7 @@ function library:Init(key)
                         end
 
                         selectorText.Text = optionButton.Text
-                        TweenService:Create(selectorText, TweenTable["selector"], {TextColor3 = Color3.fromRGB(128, 215, 255)}):Play()
+                        TweenService:Create(optionButton, TweenTable["selector"], {TextColor3 = Color3.fromRGB(128, 215, 255)}):Play()
                         callback(optionButton.Text)
                     end
                 end)
