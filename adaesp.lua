@@ -71,6 +71,7 @@ function esp:update(plr, character, humanoid, hrp, drawings)
         local legPos = camera:WorldToViewportPoint(hrp.Position - legOffset)
 
         if onScreen then
+			print("hi2")
             local height = headPos.Y - legPos.Y
             local absHeight = math.abs(height)
             local width = absHeight * 0.7
