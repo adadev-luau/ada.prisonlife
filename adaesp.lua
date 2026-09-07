@@ -139,7 +139,6 @@ end
 
 runService.RenderStepped:Connect(function()
     for plr, drawings in pairs(esp.players) do
-		esp:update(plr, character, humanoid, hrp, drawings)
         if not drawings then continue end
 
         if not esp.enabled then
@@ -192,6 +191,7 @@ runService.RenderStepped:Connect(function()
         end
 
         esp:update(plr, character, humanoid, hrp, drawings)
+		print("hi")
     end
 end)
 
