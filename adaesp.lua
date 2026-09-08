@@ -172,7 +172,7 @@ runService.RenderStepped:Connect(function()
             continue
         end
 			
-        if esp.excludedTeams[plr.Team.Name] == true then
+        if table.find(esp.excludedTeams, plr.Team.Name) then
 		    print(plr.Team .. " excluded")
             drawings.outline.Visible = false
             drawings.box.Visible = false
