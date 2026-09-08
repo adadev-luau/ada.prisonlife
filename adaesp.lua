@@ -8,43 +8,49 @@ local headOffset = Vector3.new(0, 0.5, 0)
 local legOffset = Vector3.new(0, 3, 0)
 
 local esp = {
-    enabled = false,
-    excludedTeams = {},
-    excludedPlayers = {},
-    players = {},
-    transparency = 1,
-    healthOffset = 9,
+	enabled = true,
+	excludedTeams = {Guards = true},
+	excludedPlayers = {},
+	players = {},
+	transparency = 1,
+	healthOffset = 9,
 }
 
+function esp:hide(drawings)
+	for i, v in drawings do
+		v.Visible = false
+	end
+end
+
 function esp:addPlayer(plr)
-    local outline = Drawing.new("Square")
-    outline.Visible = false
-    outline.Color = Color3.fromRGB(60, 60, 60)
-    outline.Thickness = 3
-    outline.Transparency = esp.transparency
-    outline.Filled = false
+	local outline = Drawing.new("Square")
+	outline.Visible = false
+	outline.Color = Color3.fromRGB(60, 60, 60)
+	outline.Thickness = 3
+	outline.Transparency = esp.transparency
+	outline.Filled = false
 
-    local box = Drawing.new("Square")
-    box.Visible = false
+	local box = Drawing.new("Square")
+	box.Visible = false
 	box.Color = Color3.fromRGB(128, 215, 255)
-    box.Thickness = 1
-    box.Transparency = esp.transparency
-    box.Filled = false
+	box.Thickness = 1
+	box.Transparency = esp.transparency
+	box.Filled = false
 
-    local healthOutline = Drawing.new("Square")
-    healthOutline.Visible = false
-    healthOutline.Color = Color3.fromRGB(60, 60, 60)
-    healthOutline.Thickness = 2
-    healthOutline.Transparency = esp.transparency
-    healthOutline.Filled = false
+	local healthOutline = Drawing.new("Square")
+	healthOutline.Visible = false
+	healthOutline.Color = Color3.fromRGB(60, 60, 60)
+	healthOutline.Thickness = 2
+	healthOutline.Transparency = esp.transparency
+	healthOutline.Filled = false
 
-    local health = Drawing.new("Square")
-    health.Visible = false
-    health.Color = Color3.fromRGB(82, 255, 73)
-    health.Thickness = 1
-    health.Transparency = esp.transparency
+	local health = Drawing.new("Square")
+	health.Visible = false
+	health.Color = Color3.fromRGB(82, 255, 73)
+	health.Thickness = 1
+	health.Transparency = esp.transparency
 	health.Filled = true
-	
+
 	local name = Drawing.new("Text")
 	name.Visible = false
 	name.Color = Color3.fromRGB(128, 215, 255)
@@ -55,144 +61,123 @@ function esp:addPlayer(plr)
 	name.Text = plr.Name
 	name.Font = Drawing.Fonts.Plex
 
-    esp.players[plr] = {
-        outline = outline,
-        box = box,
-        healthOutline = healthOutline,
+	esp.players[plr] = {
+		outline = outline,
+		box = box,
+		healthOutline = healthOutline,
 		health = health,
 		name = name,
-    }
+	}
 end
 
 function esp:update(plr, character, humanoid, hrp, drawings)
-    if character and humanoid and hrp and plr ~= player and humanoid.Health > 0 then
-        local hrpPos, onScreen = camera:WorldToViewportPoint(hrp.Position)
-        local headPos = camera:WorldToViewportPoint(character.Head.Position + headOffset)
-        local legPos = camera:WorldToViewportPoint(hrp.Position - legOffset)
+	if character and humanoid and hrp and plr ~= player and humanoid.Health > 0 then
+		local hrpPos, onScreen = camera:WorldToViewportPoint(hrp.Position)
+		local headPos = camera:WorldToViewportPoint(character.Head.Position + headOffset)
+		local legPos = camera:WorldToViewportPoint(hrp.Position - legOffset)
 
-        if onScreen then
-            local height = headPos.Y - legPos.Y
-            local absHeight = math.abs(height)
-            local width = absHeight * 0.7
+		if onScreen then
+			local height = headPos.Y - legPos.Y
+			local absHeight = math.abs(height)
+			local width = absHeight * 0.7
 
-            local topY = hrpPos.Y - absHeight / 2
-            local leftX = hrpPos.X - width / 2
+			local topY = hrpPos.Y - absHeight / 2
+			local leftX = hrpPos.X - width / 2
 
-            drawings.outline.Size = Vector2.new(width, absHeight)
-            drawings.outline.Position = Vector2.new(leftX, topY)
-            drawings.outline.Transparency = esp.transparency
-            drawings.outline.Visible = true
+			drawings.outline.Size = Vector2.new(width, absHeight)
+			drawings.outline.Position = Vector2.new(leftX, topY)
+			drawings.outline.Transparency = esp.transparency
+			drawings.outline.Visible = true
 
-            drawings.box.Size = Vector2.new(width, absHeight)
-            drawings.box.Position = Vector2.new(leftX, topY)
-            drawings.box.Transparency = esp.transparency
-            drawings.box.Visible = true
+			drawings.box.Size = Vector2.new(width, absHeight)
+			drawings.box.Position = Vector2.new(leftX, topY)
+			drawings.box.Transparency = esp.transparency
+			drawings.box.Visible = true
 
-            local ratio = humanoid.Health / humanoid.MaxHealth
-            local barHeight = absHeight * (ratio)
+			local ratio = humanoid.Health / humanoid.MaxHealth
+			local barHeight = absHeight * (ratio)
 
-            local healthX = hrpPos.X - (width / 2) - esp.healthOffset
+			local healthX = hrpPos.X - (width / 2) - esp.healthOffset
 
-            drawings.healthOutline.Size = Vector2.new(3, absHeight)
-            drawings.healthOutline.Position = Vector2.new(healthX, topY)
-            drawings.healthOutline.Transparency = esp.transparency
-            drawings.healthOutline.Visible = true
+			drawings.healthOutline.Size = Vector2.new(3, absHeight)
+			drawings.healthOutline.Position = Vector2.new(healthX, topY)
+			drawings.healthOutline.Transparency = esp.transparency
+			drawings.healthOutline.Visible = true
 
-            drawings.health.Size = Vector2.new(3, barHeight)
-            drawings.health.Position = Vector2.new(healthX, topY + (absHeight - barHeight))
-            drawings.health.Transparency = esp.transparency
+			drawings.health.Size = Vector2.new(3, barHeight)
+			drawings.health.Position = Vector2.new(healthX, topY + (absHeight - barHeight))
+			drawings.health.Transparency = esp.transparency
 			drawings.health.Visible = true
-			
+
 			drawings.name.Position = Vector2.new(hrpPos.X, topY - 16)
 			drawings.name.Transparency = esp.transparency
 			drawings.name.Visible = true
 
-        else
-            drawings.outline.Visible = false
-            drawings.box.Visible = false
-            drawings.healthOutline.Visible = false
+		else
+			drawings.outline.Visible = false
+			drawings.box.Visible = false
+			drawings.healthOutline.Visible = false
 			drawings.health.Visible = false
 			drawings.name.Visible = false
-        end
-    end
+		end
+	end
 end
 
 players.PlayerAdded:Connect(function(plr)
-    esp:addPlayer(plr)
+	esp:addPlayer(plr)
 end)
 
 players.PlayerRemoving:Connect(function(plr)
-    local d = esp.players[plr]
-    if d then
-        d.outline:Remove()
-        d.box:Remove()
-        d.healthOutline:Remove()
+	local d = esp.players[plr]
+	if d then
+		d.outline:Remove()
+		d.box:Remove()
+		d.healthOutline:Remove()
 		d.health:Remove()
 		d.name:Remove()
-        esp.players[plr] = nil
-    end
+		esp.players[plr] = nil
+	end
 end)
 
 for _, v in players:GetPlayers() do
-    esp:addPlayer(v)
+	esp:addPlayer(v)
 end
 
 runService.RenderStepped:Connect(function()
-    for plr, drawings in pairs(esp.players) do
-        if not drawings then continue end
+	for plr, drawings in pairs(esp.players) do
+		if not drawings then continue end
 
-        if not esp.enabled then
-            drawings.outline.Visible = false
-            drawings.box.Visible = false
-            drawings.healthOutline.Visible = false
-			drawings.health.Visible = false
-			drawings.name.Visible = false
-            continue
-        end
+		if not esp.enabled then
+			esp:hide(drawings)
+			continue
+		end
 
-        local character = plr.Character
-        if not character then
-            drawings.outline.Visible = false
-            drawings.box.Visible = false
-            drawings.healthOutline.Visible = false
-			drawings.health.Visible = false
-			drawings.name.Visible = false
-            continue
-        end
+		local character = plr.Character
+		if not character then
+			esp:hide(drawings)
+			continue
+		end
 
-        local humanoid = character:FindFirstChild("Humanoid")
-        local hrp = character:FindFirstChild("HumanoidRootPart")
+		local humanoid = character:FindFirstChild("Humanoid")
+		local hrp = character:FindFirstChild("HumanoidRootPart")
 
-        if not humanoid or not hrp or humanoid.Health <= 0 then
-            drawings.outline.Visible = false
-            drawings.box.Visible = false
-            drawings.healthOutline.Visible = false
-			drawings.health.Visible = false
-			drawings.name.Visible = false
-            continue
-        end
-			
-        if table.find(esp.excludedTeams, plr.Team.Name) then
-		    print(plr.Team .. " excluded")
-            drawings.outline.Visible = false
-            drawings.box.Visible = false
-            drawings.healthOutline.Visible = false
-			drawings.health.Visible = false
-			drawings.name.Visible = false
-            continue
-        end
+		if not humanoid or not hrp or humanoid.Health <= 0 then
+			esp:hide(drawings)
+			continue
+		end
 
-        if esp.excludedPlayers[plr] then
-            drawings.outline.Visible = false
-            drawings.box.Visible = false
-            drawings.healthOutline.Visible = false
-			drawings.health.Visible = false
-			drawings.name.Visible = false
-            continue
-        end
+		if esp.excludedTeams[plr.Team.Name] then
+			esp:hide(drawings)
+			continue
+		end
 
-        esp:update(plr, character, humanoid, hrp, drawings)
-    end
+		if esp.excludedPlayers[plr] then
+			esp:hide(drawings)
+			continue
+		end
+
+		esp:update(plr, character, humanoid, hrp, drawings)
+	end
 end)
 
 return esp
