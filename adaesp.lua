@@ -8,8 +8,8 @@ local headOffset = Vector3.new(0, 0.5, 0)
 local legOffset = Vector3.new(0, 3, 0)
 
 local esp = {
-	enabled = true,
-	excludedTeams = {Guards = true},
+	enabled = false,
+	excludedTeams = {},
 	excludedPlayers = {},
 	players = {},
 	transparency = 1,
