@@ -171,8 +171,7 @@ runService.RenderStepped:Connect(function()
 			drawings.name.Visible = false
             continue
         end
-
-		print(plr.Team)
+			
         if esp.excludedTeams[plr.Team.Name] == true then
 		    print(plr.Team .. " excluded")
             drawings.outline.Visible = false
