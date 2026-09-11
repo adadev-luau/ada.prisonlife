@@ -166,7 +166,7 @@ runService.RenderStepped:Connect(function()
 			continue
 		end
 
-		if esp.excludedTeams[plr.Team.Name] then
+		if table.find(esp.excludedTeams, plr.Team.Name) then
 			esp:hide(drawings)
 			continue
 		end
