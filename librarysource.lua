@@ -1840,8 +1840,11 @@ function library:Init(key)
                         ChosenKey = InputWait.KeyCode.Name
                     end
                 end)
-    
-                local ChatTextBox = Player.PlayerGui.Chat.Frame.ChatBarParentFrame.Frame.BoxFrame.Frame.ChatBar
+
+                local chatCheck = Player.PlayerGui:WaitForChild("Chat")
+                if chatCheck then
+                    local ChatTextBox = Player.PlayerGui.Chat.Frame.ChatBarParentFrame.Frame.BoxFrame.Frame.ChatBar
+                end
                 if UserInputService.WindowFocused then
                     UserInputService.InputBegan:Connect(function(c, p)
                         if not p then
@@ -2077,8 +2080,6 @@ function library:Init(key)
             local chatCheck = Player.PlayerGui:WaitForChild("Chat")
             if chatCheck then
                 local ChatTextBox = Player.PlayerGui.Chat.Frame.ChatBarParentFrame.Frame.BoxFrame.Frame.ChatBar
-            else
-                warn("player does not have chat")
             end
             if UserInputService.WindowFocused then
                 UserInputService.InputBegan:Connect(function(c, p)
