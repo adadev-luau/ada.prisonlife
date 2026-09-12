@@ -16,6 +16,7 @@ local RunService = game:GetService("RunService")
 local CoreGuiService = game:GetService("CoreGui")
 local ContentService = game:GetService("ContentProvider")
 local TeleportService = game:GetService("TeleportService")
+local TextChatService = game:GetService("TextChatService")
 
 -- / Tween table & function
 local TweenTable = {
@@ -1841,14 +1842,10 @@ function library:Init(key)
                     end
                 end)
 
-                local chatCheck = Player.PlayerGui:WaitForChild("Chat")
-                if chatCheck then
-                    local ChatTextBox = Player.PlayerGui.Chat.Frame.ChatBarParentFrame.Frame.BoxFrame.Frame.ChatBar
-                end
                 if UserInputService.WindowFocused then
                     UserInputService.InputBegan:Connect(function(c, p)
                         if not p then
-                            if c.KeyCode.Name == ChosenKey and not ChatTextBox:IsFocused() then
+                            if c.KeyCode.Name == ChosenKey and TextChatService.ChatInputBarConfiguration.TargetTextChannel == nil then
                                 On = not On
                                 local SizeOn = On and UDim2.new(0, 12, 0, 12) or UDim2.new(0, 0, 0, 0)
                                 local Transparency = On and 0 or 1
@@ -2077,17 +2074,11 @@ function library:Init(key)
                     ChosenKey = InputWait.KeyCode.Name
                 end
             end)
-            local chatCheck = Player.PlayerGui:WaitForChild("Chat")
-            if chatCheck then
-                local ChatTextBox = Player.PlayerGui.Chat.Frame.ChatBarParentFrame.Frame.BoxFrame.Frame.ChatBar
-            end
+
             if UserInputService.WindowFocused then
                 UserInputService.InputBegan:Connect(function(c, p)
-                    if not p then
-                        if c.KeyCode.Name == ChosenKey and not ChatTextBox:IsFocused() then
-                            callback(ChosenKey)
-                            return
-                        end
+                    if not p and c.KeyCode.Name == ChosenKey and TextChatService.ChatInputBarConfiguration.TargetTextChannel == nil then
+                        callback(ChosenKey)
                     end
                 end)
             end
